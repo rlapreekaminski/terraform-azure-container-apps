@@ -1,0 +1,30 @@
+{
+  "name": "Terraform DevContainer",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "runArgs": ["--name", "terraform-azure-container-apps"],
+  "postCreateCommand": "terraform --version && az --version",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.formatOnPaste": false,
+        "editor.formatOnType": false,
+        "editor.formatOnSave": true,
+        "editor.formatOnSaveMode": "file",
+        "editor.tabSize": 2,
+        "files.autoSave": "off"
+      },
+      "extensions": [
+        "ms-azuretools.vscode-azureterraform",
+        "ms-azuretools.vscode-docker",
+        "ms-vscode.azure-account",
+        "4ops.terraform",
+        "hashicorp.terraform"
+      ]
+    }
+  },
+  "remoteUser": "vscode",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}"
+}
