@@ -22,13 +22,13 @@ jobs:
       RESOURCE_GROUP: ${{ secrets.RESOURCE_GROUP }}
       STORAGE_ACCOUNT: ${{ secrets.STORAGE_ACCOUNT }}
       CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
-      TF_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-      TF_REGION: "westeurope"
-      TF_REGION_CODE: "weu"
-      TF_ENVIRONMENT: "dev"
-      TF_PRODUCT_CODE: "aca"
-      TF_PRODUCT_NAME: "container-apps-template"
-      TF_OWNER: "rlapreekaminski"
+      TF_VAR_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      TF_VAR_REGION: "westeurope"
+      TF_VAR_REGION_CODE: "weu"
+      TF_VAR_ENVIRONMENT: "dev"
+      TF_VAR_PRODUCT_CODE: "aca"
+      TF_VAR_PRODUCT_NAME: "container-apps-template"
+      TF_VAR_OWNER: "rlapreekaminski"
 
     steps:
       - name: Checkout code
