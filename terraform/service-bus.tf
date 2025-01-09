@@ -7,6 +7,9 @@ resource "azurerm_servicebus_namespace" "sb" {
   tags = local.default_tags
 }
 
+####################
+# Process queue
+####################
 resource "azurerm_servicebus_queue" "process_queue" {
   name         = "process-queue-${var.product_code}-${var.region_code}-${var.environment}"
   namespace_id = azurerm_servicebus_namespace.sb.id
@@ -15,7 +18,7 @@ resource "azurerm_servicebus_queue" "process_queue" {
 }
 
 resource "azurerm_servicebus_queue_authorization_rule" "process_queue_sender_auth" {
-  name     = "container-job-queue-auth-${var.environment}"
+  name     = "sender"
   queue_id = azurerm_servicebus_queue.process_queue.id
 
   listen = false
@@ -24,7 +27,7 @@ resource "azurerm_servicebus_queue_authorization_rule" "process_queue_sender_aut
 }
 
 resource "azurerm_servicebus_queue_authorization_rule" "process_queue_listener_auth" {
-  name     = "container-job-queue-auth-${var.environment}"
+  name     = "listener"
   queue_id = azurerm_servicebus_queue.process_queue.id
 
   listen = true
@@ -43,8 +46,8 @@ resource "azurerm_servicebus_topic" "topic_users" {
   partitioning_enabled = true
 }
 
-resource "azurerm_servicebus_subscription" "users_topic_orders_subscription" {
-  name               = "users-topic-orders-subscription"
+resource "azurerm_servicebus_subscription" "users_topic_users_subscription" {
+  name               = "users-topic-users-subscription"
   topic_id           = azurerm_servicebus_topic.topic_users.id
   max_delivery_count = 1
 }
@@ -78,8 +81,8 @@ resource "azurerm_servicebus_topic" "topic_orders" {
   partitioning_enabled = true
 }
 
-resource "azurerm_servicebus_subscription" "orders_topic_users_subscription" {
-  name               = "orders-topic-users-subscription"
+resource "azurerm_servicebus_subscription" "orders_topic_orders_subscription" {
+  name               = "orders-topic-orders-subscription"
   topic_id           = azurerm_servicebus_topic.topic_orders.id
   max_delivery_count = 1
 }

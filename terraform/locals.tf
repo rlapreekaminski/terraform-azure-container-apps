@@ -1,4 +1,5 @@
 locals {
+  tenant_id            = data.azurerm_client_config.current.tenant_id
   backend_service_code = "backend"
   front_service_code   = "front"
 
@@ -12,3 +13,5 @@ locals {
     productCode : "${var.product_code}"
   }
 }
+
+data "azurerm_client_config" "current" {}

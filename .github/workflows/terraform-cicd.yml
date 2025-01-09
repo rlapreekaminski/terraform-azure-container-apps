@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./infra/terraform
+        working-directory: ./terraform
         shell: bash
 
     env:
@@ -21,6 +21,12 @@ jobs:
       RESOURCE_GROUP: ${{ secrets.RESOURCE_GROUP }}
       STORAGE_ACCOUNT: ${{ secrets.STORAGE_ACCOUNT }}
       CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
+      TF_REGION: "westeurope"
+      TF_REGION_CODE: "weu"
+      TF_ENVIRONMENT: "dev"
+      TF_PRODUCT_CODE: "aca"
+      TF_PRODUCT_NAME: "container-apps-template"
+      TF_OWNER: "rlapreekaminski"
 
     steps:
       - name: Checkout code
@@ -41,7 +47,7 @@ jobs:
       - name: Plan Terraform deployment
         run: |
           export exitcode=0
-          terraform plan -var-file="var-test.tfvars" -input=false -detailed-exitcode -no-color -out=tfplan || export exitcode=$?
+          terraform plan -input=false -detailed-exitcode -no-color -out=tfplan || export exitcode=$?
 
           echo "exitcode=$exitcode" >> $GITHUB_OUTPUT
           
